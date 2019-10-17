@@ -36,14 +36,17 @@ play game start_state opponent ts =
         then
           do
             putStrLn "\n"
-            person_play game (ContinueGame start_state) opponent ts
+            putStrLn "Please type a random number."
+            line2 <- getLine
+            let idx = (read (removeChar line2) :: Int)
+            person_play game (ContinueGame (setStartState (setWord(idx)))) opponent ts
       else if line1 == "2"
         then
           do
             putStrLn "\n"
             putStrLn "Enter a word for the computer to guess."
-            line2 <- getLine
-            computer_play game (ContinueGame (setStartState (remove line2))) opponent ts
+            line3 <- getLine
+            computer_play game (ContinueGame (setStartState (remove line3))) opponent ts
       else
           do
             putStrLn "\n"
