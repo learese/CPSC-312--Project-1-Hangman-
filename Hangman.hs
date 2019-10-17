@@ -80,8 +80,12 @@ setStartState :: String -> State
 setStartState word = State((displayGuess word ""), "", (filterWordBankLen (length word) wordbank1), word, 6) [n | n <- ['a'..'z']]
 
 remove :: String -> String
--- remove characters than are nor in the alphabet from str
+-- remove characters than are not in the alphabet from str
 remove str = [s | s <- str, not (s `elem` " ,.?!-:;\"\'0123456789")]
+
+removeChar :: String -> String
+-- remove characters than are from the alphabet or punctuation
+removeChar str = [s | s <- str, not (s `elem` " ,.?!-:;\"\'abcdefghijklmnopqrstuvwxyz")]
 
 
 -- filter function that filters out words from the word bank based on length of word
@@ -90,13 +94,22 @@ filterWordBankLen :: Int -> [[Char]] -> [[Char]]
 filterWordBankLen _ [] = []
 filterWordBankLen len wbstate = [w | w <- wbstate, (length w) == len]
 
+setWord :: Int -> [Char]
+setWord int = do
+  let g = (mkStdGen int)
+  let randInts = (randomRs (1, 855) g) :: [Int]
+  let randInt = head (randInts)
+  wordbank1 !! randInt
 
 
 ------ Default Start States -------
-hangman_start = State((displayGuess "frazzle" ""), "", (filterWordBankLen 7 wordbank1), "frazzle", 6) [n | n <- ['a'..'z']]
+hangman_start = State("", "", wordbank1, "", 6) [n | n <- ['a'..'z']]
+
+random_start = State("", "", wordbank1, "", 6) [n | n <- ['a'..'z']]
 
 instance Show State where
     show (State (letr, g_letr, wordbank, word, guess) available) = show letr
+
 
 
 
