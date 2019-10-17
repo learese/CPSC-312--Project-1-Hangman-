@@ -136,5 +136,5 @@ getMaxRank (h:t) _ = maxRest h t
 
 
 -------- Computer Hangman Player -----------------
-comp_hangman_player :: Player
-comp_hangman_player state = compSmartGuess state
+simple_player :: Player
+simple_player state = compSmartGuess state

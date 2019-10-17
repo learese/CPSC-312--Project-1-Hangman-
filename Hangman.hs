@@ -132,12 +132,3 @@ fullImage idx =
     "|    |" :
     map ("|   " ++) img
     where img = image !! idx
-
-
-
-------- A Simple Player -------
-
-simple_player :: Player
--- this player has an ordering of the moves, and chooses the first one available
-simple_player (State _ avail) = head [e | e <- ['a'..'z'],
-                                              e `elem` avail]
