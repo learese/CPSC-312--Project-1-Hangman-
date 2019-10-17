@@ -38,6 +38,7 @@ play game start_state opponent ts =
             putStrLn "\n"
             putStrLn "Please type a random number."
             line2 <- getLine
+            putStrLn "\n"
             let idx = (read (removeChar line2) :: Int)
             person_play game (ContinueGame (setStartState (setWord(idx)))) opponent ts
       else if line1 == "2"
@@ -46,6 +47,7 @@ play game start_state opponent ts =
             putStrLn "\n"
             putStrLn "Enter a word for the computer to guess."
             line3 <- getLine
+            putStrLn "\n"
             computer_play game (ContinueGame (setStartState (remove line3))) opponent ts
       else
           do
@@ -109,19 +111,17 @@ computer_play game (ContinueGame state) opponent ts =
             putStrLn (show newState)
             putStrLn "\n"
             putStrLn(unlines(fullImage(6 - (displayGuessCount newState))))
-            putStrLn ("Number of guess(es) left:  " ++show ((displayGuessCount newState) + 1)++ ".")
+            putStrLn ("Number of guess(es) left: " ++show ((displayGuessCount newState) + 1)++ ".")
             putStrLn ("The word to guess has "++show(getWordLength(newState))++" letter(s).")
             putStrLn ("The computer chose "++show opponent_move)
             if (checkGuess opponent_move newState)
               then
                 do
                   putStrLn "The computer guessed correctly!"
-                  putStrLn "\n"
                   computer_play game (game opponent_move newState) opponent ts
             else
               do
                 putStrLn "The computer guessed incorrectly."
-                putStrLn "\n"
                 computer_play game (game opponent_move newState) opponent ts
 
 
